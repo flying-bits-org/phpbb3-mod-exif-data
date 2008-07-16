@@ -52,7 +52,7 @@
 						if(isset($exif["EXIF"]["DateTimeOriginal"]))
 						{
 							$timestamp = mktime(substr($exif["EXIF"]["DateTimeOriginal"], 11, 2), substr($exif["EXIF"]["DateTimeOriginal"], 14, 2), substr($exif["EXIF"]["DateTimeOriginal"], 17, 2), substr($exif["EXIF"]["DateTimeOriginal"], 5, 2), substr($exif["EXIF"]["DateTimeOriginal"], 8, 2), substr($exif["EXIF"]["DateTimeOriginal"], 0, 4));
-							$exif_date = $user->format_date($exif["FILE"]["FileDateTime"]);//$timestamp);
+							$exif_date = $user->format_date($timestamp);
 						}
 						if(isset($exif["EXIF"]["FocalLength"]))
 						{
