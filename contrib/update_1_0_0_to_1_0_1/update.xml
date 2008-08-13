@@ -24,27 +24,11 @@
       <target-version>3.0.2</target-version>
     </installation>
     <link-group>
-      <link type="parent" lang="de" href="contrib/update_1_0_0_to_1_0_1/update.xml">Update von 1.0.0 auf 1.0.1</link>
-      <link type="parent" lang="en-gb" href="contrib/update_1_0_0_to_1_0_1/update.xml">Update from 1.0.0 to 1.0.1</link>
-      <link type="language" lang="de" href="xml/de.xml">Anleitung für das deutsche Sprachpaket</link>
-      <link type="language" lang="en-gb" href="xml/de.xml">Manual for German Language-set</link>
+      <link type="parent" lang="de" href="../../install.xml">Installations-Anleitung</link>
+      <link type="parent" lang="en-gb" href="../../install.xml">Install</link>
       <link type="template" lang="de" href="xml/subsilver2.xml">Anleitung für das Style subsilver2</link>
       <link type="template" lang="en-gb" href="xml/subsilver2.xml">Manual for subsilver2 Style</link>
     </link-group>
-    <history>
-      <entry>
-        <date>2008-08-14</date>
-        <rev-version>1.0.1</rev-version>
-        <changelog lang="de">
-          <change><![CDATA[[Add] Funktion auch bei der Einstellung: Vorschaubilder]]></change>
-          <change><![CDATA[[Fix] Sicherheitsloch: benutzt htmlspecialchars() um das einbinden von Scripten zu unterbinden]]></change>
-        </changelog>
-        <changelog lang="en-gb">
-          <change><![CDATA[[Add] make it work for Option: display thumbnails]]></change>
-          <change><![CDATA[[Fix] Security: use htmlspecialchars() to avoid scripts]]></change>
-        </changelog>
-      </entry>
-    </history>
     <meta name="generator" content="Phpbb.ModTeam.Tools (c#)" />
   </header>
   <action-group>
@@ -53,13 +37,63 @@
     </copy>
     <open src="includes/functions_content.php">
       <edit>
-        <find><![CDATA[	global $extensions, $config, $phpbb_root_path, $phpEx;]]></find>
-        <action type="after-add"><![CDATA[$user->add_lang('mods/exif_data');]]></action>
-      </edit>
-      <edit>
-        <find><![CDATA[					$inline_link = append_sid("{$phpbb_root_path}download/file.$phpEx", 'id=' . $attachment['attach_id']);
-					$download_link .= '&amp;mode=view';]]></find>
-        <action type="after-add"><![CDATA[					$exif = ($attachment['extension'] == 'jpg' || $attachment['extension'] == 'jpeg') ? @exif_read_data($filename, 0, true) : array();
+        <find><![CDATA[					$exif = exif_read_data($filename, 0, true);
+					if (!empty($exif["EXIF"]))
+					{
+						$exif_date = $exif_focal = 
+						$exif_aperture = $exif_exposure = $exif_iso = $exif_whitebalance = $exif_flash = $exif_make = $exif_model = $user->lang['EXIF_NOT_AVAILABLE'];
+
+						if(isset($exif["EXIF"]["DateTimeOriginal"]))
+						{
+							$timestamp = mktime(substr($exif["EXIF"]["DateTimeOriginal"], 11, 2), substr($exif["EXIF"]["DateTimeOriginal"], 14, 2), substr($exif["EXIF"]["DateTimeOriginal"], 17, 2), substr($exif["EXIF"]["DateTimeOriginal"], 5, 2), substr($exif["EXIF"]["DateTimeOriginal"], 8, 2), substr($exif["EXIF"]["DateTimeOriginal"], 0, 4));
+							$exif_date = $user->format_date($timestamp);
+						}
+						if(isset($exif["EXIF"]["FocalLength"]))
+						{
+							list($num, $den) = explode("/", $exif["EXIF"]["FocalLength"]);
+							$exif_focal  = ($num/$den);
+						}
+						if(isset($exif["EXIF"]["ExposureTime"]))
+						{
+							list($num, $den) = explode("/", $exif["EXIF"]["ExposureTime"]);
+							$exif_exposure = '1/' . $den/$num;
+						}
+						if(isset($exif["EXIF"]["FNumber"]))
+						{
+							list($num,$den) = explode("/",$exif["EXIF"]["FNumber"]);
+							$exif_aperture  = "F/" . ($num/$den);
+						}
+						if(isset($exif["EXIF"]["ISOSpeedRatings"]))
+						{
+							$exif_iso = $exif["EXIF"]["ISOSpeedRatings"];
+						}
+						if (isset($exif["EXIF"]["WhiteBalance"]))
+						{
+							$exif_whitebalance = $user->lang['EXIF_WHITEB_' . (($exif["EXIF"]["WhiteBalance"]) ? 'AUTO' : 'MANU')];
+						}
+						if(isset($exif["EXIF"]["Flash"]))
+						{
+							$exif_flash = $user->lang['EXIF_FLASH_CASE_' . $exif["EXIF"]["Flash"]];
+						}
+						if (isset($exif["IFD0"]["Model"]))
+						{
+							$exif_model = ucwords($exif["IFD0"]["Model"]);
+						}
+
+						$block_array += array(
+							'EXIF_DATE'			=> $exif_date,
+							'EXIF_FOCAL'		=> $exif_focal,
+							'EXIF_EXPOSURE'		=> $exif_exposure,
+							'EXIF_APERTURE'		=> $exif_aperture,
+							'EXIF_ISO'			=> $exif_iso,
+							'EXIF_FLASH'		=> $exif_flash,
+
+							'WHITEB'		=> $exif_whitebalance,
+							'CAM_MODEL'		=> $exif_model,
+							'S_EXIF_DATA'	=> true,
+						);
+					}]]></find>
+        <action type="replace-with"><![CDATA[					$exif = ($attachment['extension'] == 'jpg' || $attachment['extension'] == 'jpeg') ? @exif_read_data($filename, 0, true) : array();
 					if (!empty($exif["EXIF"]))
 					{
 						$exif_date = $exif_focal = 
@@ -192,21 +226,6 @@
     <open src="styles/prosilver/template/attachment.html">
       <edit>
         <find><![CDATA[<!-- IF _file.COMMENT --><dd> {_file.COMMENT}</dd><!-- ENDIF -->]]></find>
-        <action type="after-add"><![CDATA[			<!-- IF _file.S_EXIF_DATA -->
-				<hr />
-				<dd><strong>{L_EXIF-DATA}</strong></dd>
-				<dd>{L_EXIF_DATE}: <em>{_file.EXIF_DATE}</em></dd>
-				<dd>{L_EXIF_FOCAL}: <em>{_file.EXIF_FOCAL} {L_EXIF_FOCAL_EXP}</em></dd>
-				<dd>{L_EXIF_EXPOSURE}: <em>{_file.EXIF_EXPOSURE} {L_EXIF_EXPOSURE_EXP}</em></dd>
-				<dd>{L_EXIF_APERTURE}: <em>{_file.EXIF_APERTURE}</em></dd>
-				<dd>{L_EXIF_ISO}: <em>{_file.EXIF_ISO}</em></dd>
-				<dd>{L_EXIF_FLASH}: <em>{_file.EXIF_FLASH}</em></dd>
-				<dd>{L_EXIF_WHITEB}: <em>{_file.WHITEB}</em></dd>
-				<dd>{L_EXIF_CAM_MODEL}: <em>{_file.CAM_MODEL}</em></dd>
-			<!-- ENDIF -->]]></action>
-      </edit>
-      <edit>
-        <find><![CDATA[<dd>{_file.DOWNLOAD_NAME} ({_file.FILESIZE} {_file.SIZE_LANG}) {_file.L_DOWNLOAD_COUNT}</dd>]]></find>
         <action type="after-add"><![CDATA[			<!-- IF _file.S_EXIF_DATA -->
 				<hr />
 				<dd><strong>{L_EXIF-DATA}</strong></dd>
