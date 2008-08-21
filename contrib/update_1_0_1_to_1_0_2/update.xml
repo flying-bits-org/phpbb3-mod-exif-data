@@ -43,7 +43,7 @@
         <inline-edit>
           <inline-find><![CDATA[$exif_focal = ]]></inline-find>
           <inline-action type="after-add"><![CDATA[$exif_exposureprogram = $exif_exposure_bias = $exif_metering_mode = ]]></inline-action>
-        <inline-edit>
+        </inline-edit>
       </edit>
       <edit>
         <find><![CDATA[$exif_whitebalance = $user->lang['EXIF_WHITEB_' . (($exif["EXIF"]["WhiteBalance"]) ? 'AUTO' : 'MANU')];]]></find>
@@ -78,7 +78,7 @@
         <inline-edit>
           <inline-find><![CDATA[$exif_focal = ]]></inline-find>
           <inline-action type="after-add"><![CDATA[$exif_exposureprogram = $exif_exposure_bias = $exif_metering_mode = ]]></inline-action>
-        <inline-edit>
+        </inline-edit>
       </edit>
       <edit>
         <find><![CDATA[$exif_whitebalance = $user->lang['EXIF_WHITEB_' . (($exif["EXIF"]["WhiteBalance"]) ? 'AUTO' : 'MANU')];]]></find>
