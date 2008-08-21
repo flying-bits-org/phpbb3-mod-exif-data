@@ -8,6 +8,8 @@
     <title lang="en-gb">NV Exif Data</title>
     <description lang="de">Zeigt die Exif-Daten der Bilder an, wenn sie als Datei-Anhang hocgeladen wurden.</description>
     <description lang="en-gb">Shows the Exif-Data on images, which were uploaded as attachments.</description>
+    <author-notes lang="de">Die exif-Erweiterung muss installiert sein, damit die MOD funktioniert.</author-notes>
+    <author-notes lang="en-gb">The exif-Extension must be installed on your server to use this MOD.</author-notes>
     <author-group>
       <author>
         <realname>Joas Schilling</realname>
@@ -17,7 +19,7 @@
         <contributions />
       </author>
     </author-group>
-    <mod-version>1.0.1</mod-version>
+    <mod-version>1.0.2</mod-version>
     <installation>
       <level>easy</level>
       <time>120</time>
@@ -32,6 +34,18 @@
       <link type="template" lang="en-gb" href="xml/subsilver2.xml">Manual for subsilver2 Style</link>
     </link-group>
     <history>
+      <entry>
+        <date>2008-08-21</date>
+        <rev-version>1.0.2</rev-version>
+        <changelog lang="de">
+          <change><![CDATA[[Add] Belichtungskorrektur, Belichtungsprogramm & Belichtungsmessmethode]]></change>
+          <change><![CDATA[[Fix] Ein paar sprachliche Fehler]]></change>
+        </changelog>
+        <changelog lang="en-gb">
+          <change><![CDATA[[Add] Exposure bias, Exposure program & Metering mode]></change>
+          <change><![CDATA[[Fix] Some language-errors]]></change>
+        </changelog>
+      </entry>
       <entry>
         <date>2008-08-14</date>
         <rev-version>1.0.1</rev-version>
@@ -62,7 +76,7 @@
         <action type="after-add"><![CDATA[					$exif = ($attachment['extension'] == 'jpg' || $attachment['extension'] == 'jpeg') ? @exif_read_data($filename, 0, true) : array();
 					if (!empty($exif["EXIF"]))
 					{
-						$exif_date = $exif_focal = 
+						$exif_date = $exif_focal = $exif_exposureprogram = $exif_exposure_bias = $exif_metering_mode = 
 						$exif_aperture = $exif_exposure = $exif_iso = $exif_whitebalance = $exif_flash = $exif_make = $exif_model = $user->lang['EXIF_NOT_AVAILABLE'];
 
 						if(isset($exif["EXIF"]["DateTimeOriginal"]))
@@ -107,6 +121,18 @@
 						{
 							$exif_model = ucwords($exif["IFD0"]["Model"]);
 						}
+						if (isset($exif["EXIF"]["ExposureProgram"]))
+						{
+							$exif_exposureprogram = $user->lang['EXIF_EXPOSURE_PROG_' . $exif["EXIF"]["ExposureProgram"]];
+						}
+						if (isset($exif["EXIF"]["ExposureBiasValue"]))
+						{
+							$exif_exposure_bias = sprintf($user->lang['EXIF_EXPOSURE_BIAS_EXP'], $exif["EXIF"]["ExposureBiasValue"]);
+						}
+						if (isset($exif["EXIF"]["MeteringMode"]))
+						{
+							$exif_metering_mode = $user->lang['EXIF_METERING_MODE_' . $exif["EXIF"]["MeteringMode"]];
+						}
 
 						$block_array += array(
 							'EXIF_DATE'			=> htmlspecialchars($exif_date),
@@ -115,6 +141,9 @@
 							'EXIF_APERTURE'		=> htmlspecialchars($exif_aperture),
 							'EXIF_ISO'			=> htmlspecialchars($exif_iso),
 							'EXIF_FLASH'		=> htmlspecialchars($exif_flash),
+							'EXIF_EXPOSURE_PROG'	=> htmlspecialchars($exif_exposureprogram),
+							'EXIF_EXPOSURE_BIAS'	=> htmlspecialchars($exif_exposure_bias),
+							'EXIF_METERING_MODE'	=> htmlspecialchars($exif_metering_mode),
 
 							'WHITEB'		=> htmlspecialchars($exif_whitebalance),
 							'CAM_MODEL'		=> htmlspecialchars($exif_model),
@@ -128,7 +157,7 @@
         <action type="after-add"><![CDATA[					$exif = ($attachment['extension'] == 'jpg' || $attachment['extension'] == 'jpeg') ? @exif_read_data($filename, 0, true) : array();
 					if (!empty($exif["EXIF"]))
 					{
-						$exif_date = $exif_focal = 
+						$exif_date = $exif_focal = $exif_exposureprogram = $exif_exposure_bias = $exif_metering_mode = 
 						$exif_aperture = $exif_exposure = $exif_iso = $exif_whitebalance = $exif_flash = $exif_make = $exif_model = $user->lang['EXIF_NOT_AVAILABLE'];
 
 						if(isset($exif["EXIF"]["DateTimeOriginal"]))
@@ -173,6 +202,18 @@
 						{
 							$exif_model = ucwords($exif["IFD0"]["Model"]);
 						}
+						if (isset($exif["EXIF"]["ExposureProgram"]))
+						{
+							$exif_exposureprogram = $user->lang['EXIF_EXPOSURE_PROG_' . $exif["EXIF"]["ExposureProgram"]];
+						}
+						if (isset($exif["EXIF"]["ExposureBiasValue"]))
+						{
+							$exif_exposure_bias = sprintf($user->lang['EXIF_EXPOSURE_BIAS_EXP'], $exif["EXIF"]["ExposureBiasValue"]);
+						}
+						if (isset($exif["EXIF"]["MeteringMode"]))
+						{
+							$exif_metering_mode = $user->lang['EXIF_METERING_MODE_' . $exif["EXIF"]["MeteringMode"]];
+						}
 
 						$block_array += array(
 							'EXIF_DATE'			=> htmlspecialchars($exif_date),
@@ -181,6 +222,9 @@
 							'EXIF_APERTURE'		=> htmlspecialchars($exif_aperture),
 							'EXIF_ISO'			=> htmlspecialchars($exif_iso),
 							'EXIF_FLASH'		=> htmlspecialchars($exif_flash),
+							'EXIF_EXPOSURE_PROG'	=> htmlspecialchars($exif_exposureprogram),
+							'EXIF_EXPOSURE_BIAS'	=> htmlspecialchars($exif_exposure_bias),
+							'EXIF_METERING_MODE'	=> htmlspecialchars($exif_metering_mode),
 
 							'WHITEB'		=> htmlspecialchars($exif_whitebalance),
 							'CAM_MODEL'		=> htmlspecialchars($exif_model),
@@ -199,6 +243,9 @@
 				<dd>{L_EXIF_FOCAL}: <em>{_file.EXIF_FOCAL} {L_EXIF_FOCAL_EXP}</em></dd>
 				<dd>{L_EXIF_EXPOSURE}: <em>{_file.EXIF_EXPOSURE} {L_EXIF_EXPOSURE_EXP}</em></dd>
 				<dd>{L_EXIF_APERTURE}: <em>{_file.EXIF_APERTURE}</em></dd>
+				<dd>{L_EXIF_EXPOSURE_PROG}: <em>{_file.EXIF_EXPOSURE_PROG}</em></dd>
+				<dd>{L_EXIF_EXPOSURE_BIAS}: <em>{_file.EXIF_EXPOSURE_BIAS}</em></dd>
+				<dd>{L_EXIF_METERING_MODE}: <em>{_file.EXIF_METERING_MODE}</em></dd>
 				<dd>{L_EXIF_ISO}: <em>{_file.EXIF_ISO}</em></dd>
 				<dd>{L_EXIF_FLASH}: <em>{_file.EXIF_FLASH}</em></dd>
 				<dd>{L_EXIF_WHITEB}: <em>{_file.WHITEB}</em></dd>
@@ -214,6 +261,9 @@
 				<dd>{L_EXIF_FOCAL}: <em>{_file.EXIF_FOCAL} {L_EXIF_FOCAL_EXP}</em></dd>
 				<dd>{L_EXIF_EXPOSURE}: <em>{_file.EXIF_EXPOSURE} {L_EXIF_EXPOSURE_EXP}</em></dd>
 				<dd>{L_EXIF_APERTURE}: <em>{_file.EXIF_APERTURE}</em></dd>
+				<dd>{L_EXIF_EXPOSURE_PROG}: <em>{_file.EXIF_EXPOSURE_PROG}</em></dd>
+				<dd>{L_EXIF_EXPOSURE_BIAS}: <em>{_file.EXIF_EXPOSURE_BIAS}</em></dd>
+				<dd>{L_EXIF_METERING_MODE}: <em>{_file.EXIF_METERING_MODE}</em></dd>
 				<dd>{L_EXIF_ISO}: <em>{_file.EXIF_ISO}</em></dd>
 				<dd>{L_EXIF_FLASH}: <em>{_file.EXIF_FLASH}</em></dd>
 				<dd>{L_EXIF_WHITEB}: <em>{_file.WHITEB}</em></dd>
