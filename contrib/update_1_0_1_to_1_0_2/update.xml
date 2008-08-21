@@ -44,6 +44,10 @@
         <inline-edit>
       </edit>
       <edit>
+        <find><![CDATA[$exif_whitebalance = $user->lang['EXIF_WHITEB_' . (($exif["EXIF"]["WhiteBalance"]) ? 'AUTO' : 'MANU')];]]></find>
+        <action type="replace-with"><![CDATA[$exif_whitebalance = $user->lang['EXIF_WHITEB_' . (($exif["EXIF"]["WhiteBalance"]) ? 'MANU' : 'AUTO')];]]></action>
+      </edit>
+      <edit>
         <find><![CDATA[						if (isset($exif["IFD0"]["Model"]))
 						{
 							$exif_model = ucwords($exif["IFD0"]["Model"]);
@@ -73,6 +77,10 @@
           <inline-find><![CDATA[$exif_focal = ]]></inline-find>
           <inline-action type="after-add"><![CDATA[$exif_exposureprogram = $exif_exposure_bias = $exif_metering_mode = ]]></inline-action>
         <inline-edit>
+      </edit>
+      <edit>
+        <find><![CDATA[$exif_whitebalance = $user->lang['EXIF_WHITEB_' . (($exif["EXIF"]["WhiteBalance"]) ? 'AUTO' : 'MANU')];]]></find>
+        <action type="replace-with"><![CDATA[$exif_whitebalance = $user->lang['EXIF_WHITEB_' . (($exif["EXIF"]["WhiteBalance"]) ? 'MANU' : 'AUTO')];]]></action>
       </edit>
       <edit>
         <find><![CDATA[						if (isset($exif["IFD0"]["Model"]))

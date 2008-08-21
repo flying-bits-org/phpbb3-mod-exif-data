@@ -111,7 +111,7 @@
 						}
 						if (isset($exif["EXIF"]["WhiteBalance"]))
 						{
-							$exif_whitebalance = $user->lang['EXIF_WHITEB_' . (($exif["EXIF"]["WhiteBalance"]) ? 'AUTO' : 'MANU')];
+							$exif_whitebalance = $user->lang['EXIF_WHITEB_' . (($exif["EXIF"]["WhiteBalance"]) ? 'MANU' : 'AUTO')];
 						}
 						if(isset($exif["EXIF"]["Flash"]))
 						{
@@ -192,7 +192,7 @@
 						}
 						if (isset($exif["EXIF"]["WhiteBalance"]))
 						{
-							$exif_whitebalance = $user->lang['EXIF_WHITEB_' . (($exif["EXIF"]["WhiteBalance"]) ? 'AUTO' : 'MANU')];
+							$exif_whitebalance = $user->lang['EXIF_WHITEB_' . (($exif["EXIF"]["WhiteBalance"]) ? 'MANU' : 'AUTO')];
 						}
 						if(isset($exif["EXIF"]["Flash"]))
 						{
