@@ -80,7 +80,7 @@ $lang = array_merge($lang, array(
 		'EXIF_FLASH_CASE_93'		=> 'Flash fired, auto mode, return light not detected, red-eye reduction mode',
 		'EXIF_FLASH_CASE_95'		=> 'Flash fired, auto mode, return light detected, red-eye reduction mode',
 
-	'EXIF_FOCAL'				=> 'Focus length',
+	'EXIF_FOCAL'				=> 'Focal length',
 		'EXIF_FOCAL_EXP'			=> 'mm',// 'EXIF_FOCAL' unit
 
 	'EXIF_ISO'					=> 'ISO speed rating',
