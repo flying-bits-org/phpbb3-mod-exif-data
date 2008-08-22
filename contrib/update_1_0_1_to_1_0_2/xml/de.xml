@@ -24,8 +24,8 @@
       <target-version>3.0.2</target-version>
     </installation>
     <link-group>
-      <link type="parent" lang="de" href="../install.xml">Installations-Anleitung</link>
-      <link type="parent" lang="en-gb" href="../install.xml">Install</link>
+      <link type="parent" lang="de" href="../update.xml">Installations-Anleitung</link>
+      <link type="parent" lang="en-gb" href="../update.xml">Install</link>
     </link-group>
     <meta name="generator" content="Phpbb.ModTeam.Tools (c#)" />
   </header>
