@@ -19,7 +19,7 @@
         <contributions />
       </author>
     </author-group>
-    <mod-version>1.0.2</mod-version>
+    <mod-version>1.0.3</mod-version>
     <installation>
       <level>easy</level>
       <time>120</time>
@@ -34,6 +34,18 @@
       <link type="template" lang="en-gb" href="contrib/subsilver2.xml">Manual for subsilver2 Style</link>
     </link-group>
     <history>
+      <entry>
+        <date>2008-09-17</date>
+        <rev-version>1.0.3</rev-version>
+        <changelog lang="de">
+          <change><![CDATA[[Fix] Belichtungskorrektur (0/3 LW -> 0 LW)]]></change>
+          <change><![CDATA[[Fix] Belichtungszeit (1/0.4 Sek -> 2.5 Sek)]]></change>
+        </changelog>
+        <changelog lang="en-gb">
+          <change><![CDATA[[Fix] Exposure bias (0/3 EV -> 0 EV)]]></change>
+          <change><![CDATA[[Fix] Shutter speed (1/0.4 Sec -> 2.5 Sec)]]></change>
+        </changelog>
+      </entry>
       <entry>
         <date>2008-08-21</date>
         <rev-version>1.0.2</rev-version>
@@ -98,7 +110,7 @@
 						if(isset($exif["EXIF"]["ExposureTime"]))
 						{
 							list($num, $den) = explode("/", $exif["EXIF"]["ExposureTime"]);
-							$exif_exposure = '1/' . $den/$num;
+							if ($num > $den) { $exif_exposure = $num/$den; } else { $exif_exposure = ' 1/' . $den/$num ; }
 						}
 						if(isset($exif["EXIF"]["FNumber"]))
 						{
@@ -127,7 +139,9 @@
 						}
 						if (isset($exif["EXIF"]["ExposureBiasValue"]))
 						{
-							$exif_exposure_bias = sprintf($user->lang['EXIF_EXPOSURE_BIAS_EXP'], $exif["EXIF"]["ExposureBiasValue"]);
+							list($num,$den) = explode("/",$exif["EXIF"]["ExposureBiasValue"]);
+							if (($num/$den) == 0) { $exif_exposure_bias = 0; }
+							$exif_exposure_bias = sprintf($user->lang['EXIF_EXPOSURE_BIAS_EXP'], $exif_exposure_bias);
 						}
 						if (isset($exif["EXIF"]["MeteringMode"]))
 						{
@@ -179,7 +193,7 @@
 						if(isset($exif["EXIF"]["ExposureTime"]))
 						{
 							list($num, $den) = explode("/", $exif["EXIF"]["ExposureTime"]);
-							$exif_exposure = '1/' . $den/$num;
+							if ($num > $den) { $exif_exposure = $num/$den; } else { $exif_exposure = ' 1/' . $den/$num ; }
 						}
 						if(isset($exif["EXIF"]["FNumber"]))
 						{
@@ -208,7 +222,9 @@
 						}
 						if (isset($exif["EXIF"]["ExposureBiasValue"]))
 						{
-							$exif_exposure_bias = sprintf($user->lang['EXIF_EXPOSURE_BIAS_EXP'], $exif["EXIF"]["ExposureBiasValue"]);
+							list($num,$den) = explode("/",$exif["EXIF"]["ExposureBiasValue"]);
+							if (($num/$den) == 0) { $exif_exposure_bias = 0; }
+							$exif_exposure_bias = sprintf($user->lang['EXIF_EXPOSURE_BIAS_EXP'], $exif_exposure_bias);
 						}
 						if (isset($exif["EXIF"]["MeteringMode"]))
 						{
