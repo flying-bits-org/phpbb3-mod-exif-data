@@ -26,10 +26,10 @@
     <link-group>
       <link type="parent" lang="de" href="../../install.xml">Installations-Anleitung</link>
       <link type="parent" lang="en-gb" href="../../install.xml">Install</link>
-      <link type="language" lang="de" href="xml/de.xml">Anleitung für das deutsche Sprachpaket</link>
-      <link type="language" lang="en-gb" href="xml/de.xml">Manual for German Language-set</link>
-      <link type="template" lang="de" href="xml/subsilver2.xml">Anleitung für das Style subsilver2</link>
-      <link type="template" lang="en-gb" href="xml/subsilver2.xml">Manual for subsilver2 Style</link>
+      <link type="language" lang="de" href="contrib/de.xml">Anleitung für das deutsche Sprachpaket</link>
+      <link type="language" lang="en-gb" href="contrib/de.xml">Manual for German Language-set</link>
+      <link type="template" lang="de" href="contrib/subsilver2.xml">Anleitung für das Style subsilver2</link>
+      <link type="template" lang="en-gb" href="contrib/subsilver2.xml">Manual for subsilver2 Style</link>
     </link-group>
     <meta name="generator" content="Phpbb.ModTeam.Tools (c#)" />
   </header>
