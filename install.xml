@@ -265,20 +265,12 @@
       </edit>
       <edit>
         <find><![CDATA[<dd>{_file.DOWNLOAD_NAME} ({_file.FILESIZE} {_file.SIZE_LANG}) {_file.L_DOWNLOAD_COUNT}</dd>]]></find>
-        <action type="after-add"><![CDATA[			<!-- IF _file.S_EXIF_DATA -->
-				<hr />
+        <action type="after-add"><![CDATA[			<!-- IF _file.S_HAS_EXIF -->
+				<!-- IF _file.COMMENT --><hr /><!-- ENDIF -->
 				<dd><strong>{L_EXIF-DATA}</strong></dd>
-				<dd>{L_EXIF_DATE}: <em>{_file.EXIF_DATE}</em></dd>
-				<dd>{L_EXIF_FOCAL}: <em>{_file.EXIF_FOCAL} {L_EXIF_FOCAL_EXP}</em></dd>
-				<dd>{L_EXIF_EXPOSURE}: <em>{_file.EXIF_EXPOSURE} {L_EXIF_EXPOSURE_EXP}</em></dd>
-				<dd>{L_EXIF_APERTURE}: <em>{_file.EXIF_APERTURE}</em></dd>
-				<dd>{L_EXIF_EXPOSURE_PROG}: <em>{_file.EXIF_EXPOSURE_PROG}</em></dd>
-				<dd>{L_EXIF_EXPOSURE_BIAS}: <em>{_file.EXIF_EXPOSURE_BIAS}</em></dd>
-				<dd>{L_EXIF_METERING_MODE}: <em>{_file.EXIF_METERING_MODE}</em></dd>
-				<dd>{L_EXIF_ISO}: <em>{_file.EXIF_ISO}</em></dd>
-				<dd>{L_EXIF_FLASH}: <em>{_file.EXIF_FLASH}</em></dd>
-				<dd>{L_EXIF_WHITEB}: <em>{_file.WHITEB}</em></dd>
-				<dd>{L_EXIF_CAM_MODEL}: <em>{_file.CAM_MODEL}</em></dd>
+				<!-- BEGIN _exifs -->
+					<dd>{_file._exifs.EXIF_NAME}: <em>{_file._exifs.EXIF_VALUE}</em></dd>
+				<!-- END _exifs -->
 			<!-- ENDIF -->]]></action>
       </edit>
     </open>

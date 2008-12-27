@@ -391,7 +391,7 @@
 				<dd>{L_EXIF_WHITEB}: <em>{_file.WHITEB}</em></dd>
 				<dd>{L_EXIF_CAM_MODEL}: <em>{_file.CAM_MODEL}</em></dd>
 			<!-- ENDIF -->]]></find>
-        <action type="after-add"><![CDATA[			<!-- IF _file.S_HAS_EXIF -->
+        <action type="replace-with"><![CDATA[			<!-- IF _file.S_HAS_EXIF -->
 				<hr />
 				<dd><strong>{L_EXIF-DATA}</strong></dd>
 				<!-- BEGIN _exifs -->
