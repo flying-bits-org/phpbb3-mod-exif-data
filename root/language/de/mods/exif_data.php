@@ -36,9 +36,9 @@ $lang = array_merge($lang, array(
 	'EXIF_DATE'					=> 'Bild aufgenommen am',
 
 	'EXIF_EXPOSURE'				=> 'Belichtungszeit',
-		'EXIF_EXPOSURE_EXP'			=> 'Sek',// 'EXIF_EXPOSURE' unit
+		'EXIF_EXPOSURE_EXP'			=> '%s Sek',// 'EXIF_EXPOSURE' unit
 	'EXIF_EXPOSURE_BIAS'		=> 'Belichtungskorrektur',
-		'EXIF_EXPOSURE_BIAS_EXP'	=> '%d LW',// 'EXIF_EXPOSURE_BIAS' unit
+		'EXIF_EXPOSURE_BIAS_EXP'	=> '%s LW',// 'EXIF_EXPOSURE_BIAS' unit
 	'EXIF_EXPOSURE_PROG'		=> 'Belichtungsprogramm',
 		'EXIF_EXPOSURE_PROG_0'		=> 'Nicht definiert',
 		'EXIF_EXPOSURE_PROG_1'		=> 'Manuell',
@@ -81,7 +81,7 @@ $lang = array_merge($lang, array(
 		'EXIF_FLASH_CASE_95'		=> 'Blitz wurde ausgelöst, Automodus, Messblitz-Licht zurückgeworfen, Rote-Augen-Reduzierung',
 
 	'EXIF_FOCAL'				=> 'Brennweite',
-		'EXIF_FOCAL_EXP'			=> 'mm',// 'EXIF_FOCAL' unit
+		'EXIF_FOCAL_EXP'			=> '%s mm',// 'EXIF_FOCAL' unit
 
 	'EXIF_ISO'					=> 'ISO-Empfindlichkeit',
 

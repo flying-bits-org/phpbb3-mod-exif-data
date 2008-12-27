@@ -26,39 +26,14 @@
       <target-version>3.0.4</target-version>
     </installation>
     <link-group>
-      <link type="parent" lang="de" href="../install.xml">Installations-Anleitung</link>
-      <link type="parent" lang="en-gb" href="../install.xml">Install</link>
+      <link type="parent" lang="de" href="../update.xml">Update-Anleitung</link>
+      <link type="parent" lang="en-gb" href="../update.xml">Update</link>
     </link-group>
     <meta name="generator" content="Phpbb.ModTeam.Tools (c#)" />
   </header>
   <action-group>
-    <open src="styles/subsilver2/template/attachment.html">
-      <edit>
-        <find><![CDATA[			<a href="{_file.U_DOWNLOAD_LINK}"><img src="{_file.THUMB_IMAGE}" alt="{_file.DOWNLOAD_NAME}" /></a><br />
-			<span class="gensmall">{_file.DOWNLOAD_NAME} [ {_file.FILESIZE} {_file.SIZE_LANG} | {_file.L_DOWNLOAD_COUNT} ]</span>]]></find>
-        <action type="after-add"><![CDATA[			<!-- IF _file.S_HAS_EXIF -->
-				<hr />
-				<span class="gensmall">
-				<strong>{L_EXIF-DATA}</strong><br /><br />
-				<!-- BEGIN _exifs -->
-					<strong>{_file._exifs.EXIF_NAME}:</strong> <em>{_file._exifs.EXIF_VALUE}</em><br />
-				<!-- END _exifs -->
-				</span>
-			<!-- ENDIF -->]]></action>
-      </edit>
-      <edit>
-        <find><![CDATA[			<img src="{_file.U_INLINE_LINK}" alt="{_file.DOWNLOAD_NAME}" /><br />
-			<span class="gensmall">{_file.DOWNLOAD_NAME} [ {_file.FILESIZE} {_file.SIZE_LANG} | {_file.L_DOWNLOAD_COUNT} ]</span>]]></find>
-        <action type="after-add"><![CDATA[			<!-- IF _file.S_HAS_EXIF -->
-				<hr />
-				<span class="gensmall">
-				<strong>{L_EXIF-DATA}</strong><br /><br />
-				<!-- BEGIN _exifs -->
-					<strong>{_file._exifs.EXIF_NAME}:</strong> <em>{_file._exifs.EXIF_VALUE}</em><br />
-				<!-- END _exifs -->
-				</span>
-			<!-- ENDIF -->]]></action>
-      </edit>
-    </open>
+    <copy>
+      <file from="root/language/de/mods/exif_data.php" to="language/de/mods/exif_data.php" />
+    </copy>
   </action-group>
 </mod>

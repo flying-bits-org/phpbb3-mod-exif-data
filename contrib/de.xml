@@ -6,8 +6,10 @@
     <license>http://opensource.org/licenses/gpl-license.php GNU General Public License v2</license>
     <title lang="de">NV Exif Daten</title>
     <title lang="en-gb">NV Exif Data</title>
-    <description lang="de">Zeigt die Exif-Daten der Bilder an, wenn sie als Datei-Anhang hocgeladen wurden.</description>
-    <description lang="en-gb">Shows the Exif-Data on images, which were uploaded as attachments.</description>
+    <description lang="de"><![CDATA[Zeigt die Exif-Daten der Bilder an, wenn sie als Datei-Anhang hocgeladen wurden.]]></description>
+    <description lang="en-gb"><![CDATA[Shows the Exif-Data on images, which were uploaded as attachments.]]></description>
+    <author-notes lang="de"><![CDATA[Die exif-Erweiterung muss installiert sein, damit die MOD funktioniert.]]></author-notes>
+    <author-notes lang="en-gb"><![CDATA[The exif-Extension must be installed on your server to use this MOD.]]></author-notes>
     <author-group>
       <author>
         <realname>Joas Schilling</realname>
@@ -17,21 +19,21 @@
         <contributions />
       </author>
     </author-group>
-    <mod-version>1.0.2</mod-version>
+    <mod-version>1.2.0</mod-version>
     <installation>
       <level>easy</level>
       <time>120</time>
-      <target-version>3.0.2</target-version>
+      <target-version>3.0.4</target-version>
     </installation>
     <link-group>
-      <link type="parent" lang="de" href="../install.xml">Update-Anleitung</link>
-      <link type="parent" lang="en-gb" href="../install.xml">Update</link>
+      <link type="parent" lang="de" href="../install.xml">Installations-Anleitung</link>
+      <link type="parent" lang="en-gb" href="../install.xml">Install</link>
     </link-group>
     <meta name="generator" content="Phpbb.ModTeam.Tools (c#)" />
   </header>
   <action-group>
     <copy>
-      <file from="languages/de/language/de/mods/exif_data.php" to="language/de/mods/exif_data.php" />
+      <file from="root/language/de/mods/exif_data.php" to="language/de/mods/exif_data.php" />
     </copy>
   </action-group>
 </mod>

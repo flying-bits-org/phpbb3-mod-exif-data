@@ -26,17 +26,32 @@
       <target-version>3.0.4</target-version>
     </installation>
     <link-group>
-      <link type="parent" lang="de" href="../install.xml">Installations-Anleitung</link>
-      <link type="parent" lang="en-gb" href="../install.xml">Install</link>
+      <link type="parent" lang="de" href="../update.xml">Update-Anleitung</link>
+      <link type="parent" lang="en-gb" href="../update.xml">Update</link>
     </link-group>
     <meta name="generator" content="Phpbb.ModTeam.Tools (c#)" />
   </header>
   <action-group>
     <open src="styles/subsilver2/template/attachment.html">
       <edit>
-        <find><![CDATA[			<a href="{_file.U_DOWNLOAD_LINK}"><img src="{_file.THUMB_IMAGE}" alt="{_file.DOWNLOAD_NAME}" /></a><br />
-			<span class="gensmall">{_file.DOWNLOAD_NAME} [ {_file.FILESIZE} {_file.SIZE_LANG} | {_file.L_DOWNLOAD_COUNT} ]</span>]]></find>
-        <action type="after-add"><![CDATA[			<!-- IF _file.S_HAS_EXIF -->
+        <find><![CDATA[			<!-- IF _file.S_EXIF_DATA -->
+				<br /><br />
+				<span class="gensmall">
+				<strong>{L_EXIF-DATA}</strong><br /><br />
+				<strong>{L_EXIF_DATE}:</strong> <em>{_file.EXIF_DATE}</em><br />
+				<strong>{L_EXIF_FOCAL}:</strong> <em>{_file.EXIF_FOCAL} {L_EXIF_FOCAL_EXP}</em><br />
+				<strong>{L_EXIF_EXPOSURE}:</strong> <em>{_file.EXIF_EXPOSURE} {L_EXIF_EXPOSURE_EXP}</em><br />
+				<strong>{L_EXIF_APERTURE}:</strong> <em>{_file.EXIF_APERTURE}</em><br />
+				<strong>{L_EXIF_EXPOSURE_PROG}:</strong> <em>{_file.EXIF_EXPOSURE_PROG}</em><br />
+				<strong>{L_EXIF_EXPOSURE_BIAS}:</strong> <em>{_file.EXIF_EXPOSURE_BIAS}</em><br />
+				<strong>{L_EXIF_METERING_MODE}:</strong> <em>{_file.EXIF_METERING_MODE}</em><br />
+				<strong>{L_EXIF_ISO}:</strong> <em>{_file.EXIF_ISO}</em><br />
+				<strong>{L_EXIF_FLASH}:</strong> <em>{_file.EXIF_FLASH}</em><br />
+				<strong>{L_EXIF_WHITEB}:</strong> <em>{_file.WHITEB}</em><br />
+				<strong>{L_EXIF_CAM_MODEL}:</strong> <em>{_file.CAM_MODEL}</em><br />
+				</span>
+			<!-- ENDIF -->]]></find>
+        <action type="replace-with"><![CDATA[			<!-- IF _file.S_HAS_EXIF -->
 				<hr />
 				<span class="gensmall">
 				<strong>{L_EXIF-DATA}</strong><br /><br />
@@ -47,9 +62,24 @@
 			<!-- ENDIF -->]]></action>
       </edit>
       <edit>
-        <find><![CDATA[			<img src="{_file.U_INLINE_LINK}" alt="{_file.DOWNLOAD_NAME}" /><br />
-			<span class="gensmall">{_file.DOWNLOAD_NAME} [ {_file.FILESIZE} {_file.SIZE_LANG} | {_file.L_DOWNLOAD_COUNT} ]</span>]]></find>
-        <action type="after-add"><![CDATA[			<!-- IF _file.S_HAS_EXIF -->
+        <find><![CDATA[			<!-- IF _file.S_EXIF_DATA -->
+				<br /><br />
+				<span class="gensmall">
+				<strong>{L_EXIF-DATA}</strong><br /><br />
+				<strong>{L_EXIF_DATE}:</strong> <em>{_file.EXIF_DATE}</em><br />
+				<strong>{L_EXIF_FOCAL}:</strong> <em>{_file.EXIF_FOCAL} {L_EXIF_FOCAL_EXP}</em><br />
+				<strong>{L_EXIF_EXPOSURE}:</strong> <em>{_file.EXIF_EXPOSURE} {L_EXIF_EXPOSURE_EXP}</em><br />
+				<strong>{L_EXIF_APERTURE}:</strong> <em>{_file.EXIF_APERTURE}</em><br />
+				<strong>{L_EXIF_EXPOSURE_PROG}:</strong> <em>{_file.EXIF_EXPOSURE_PROG}</em><br />
+				<strong>{L_EXIF_EXPOSURE_BIAS}:</strong> <em>{_file.EXIF_EXPOSURE_BIAS}</em><br />
+				<strong>{L_EXIF_METERING_MODE}:</strong> <em>{_file.EXIF_METERING_MODE}</em><br />
+				<strong>{L_EXIF_ISO}:</strong> <em>{_file.EXIF_ISO}</em><br />
+				<strong>{L_EXIF_FLASH}:</strong> <em>{_file.EXIF_FLASH}</em><br />
+				<strong>{L_EXIF_WHITEB}:</strong> <em>{_file.WHITEB}</em><br />
+				<strong>{L_EXIF_CAM_MODEL}:</strong> <em>{_file.CAM_MODEL}</em><br />
+				</span>
+			<!-- ENDIF -->]]></find>
+        <action type="replace-with"><![CDATA[			<!-- IF _file.S_HAS_EXIF -->
 				<hr />
 				<span class="gensmall">
 				<strong>{L_EXIF-DATA}</strong><br /><br />

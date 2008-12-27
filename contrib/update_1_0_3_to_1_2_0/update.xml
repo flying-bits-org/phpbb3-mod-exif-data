@@ -26,77 +26,94 @@
       <target-version>3.0.4</target-version>
     </installation>
     <link-group>
-      <link type="contrib" lang="de" href="contrib/update_1_0_3_to_1_2_0/update.xml">Update von 1.0.3 auf 1.2.0</link>
-      <link type="contrib" lang="en-gb" href="contrib/update_1_0_3_to_1_2_0/update.xml">Update from 1.0.3 to 1.2.0</link>
-      <link type="language" lang="de" href="contrib/de.xml">Anleitung für das deutsche Sprachpaket</link>
-      <link type="language" lang="en-gb" href="contrib/de.xml">Manual for German Language-set</link>
-      <link type="template" lang="de" href="contrib/subsilver2.xml">Anleitung für das Style subsilver2</link>
-      <link type="template" lang="en-gb" href="contrib/subsilver2.xml">Manual for subsilver2 Style</link>
+      <link type="parent" lang="de" href="../../install.xml">Installations-Anleitung</link>
+      <link type="parent" lang="en-gb" href="../../install.xml">Install</link>
     </link-group>
-    <history>
-      <entry>
-        <date>2008-12-27</date>
-        <rev-version>1.2.0</rev-version>
-        <changelog lang="de">
-          <change><![CDATA[[Fix] Sprachdateien von phpBB Gallery v0.4.1]]></change>
-        </changelog>
-        <changelog lang="en-gb">
-          <change><![CDATA[[Fix] language-file of phpBB Gallery v0.4.1]]></change>
-          <change><![CDATA[[Fix] easier Option to add a exif-value]]></change>
-        </changelog>
-      </entry>
-      <entry>
-        <date>2008-09-17</date>
-        <rev-version>1.0.3</rev-version>
-        <changelog lang="de">
-          <change><![CDATA[[Fix] Belichtungskorrektur (0/3 LW -> 0 LW)]]></change>
-          <change><![CDATA[[Fix] Belichtungszeit (1/0.4 Sek -> 2.5 Sek)]]></change>
-        </changelog>
-        <changelog lang="en-gb">
-          <change><![CDATA[[Fix] Exposure bias (0/3 EV -> 0 EV)]]></change>
-          <change><![CDATA[[Fix] Shutter speed (1/0.4 Sec -> 2.5 Sec)]]></change>
-        </changelog>
-      </entry>
-      <entry>
-        <date>2008-08-21</date>
-        <rev-version>1.0.2</rev-version>
-        <changelog lang="de">
-          <change><![CDATA[[Add] Belichtungskorrektur, Belichtungsprogramm & Belichtungsmessmethode]]></change>
-          <change><![CDATA[[Fix] Ein paar sprachliche Fehler]]></change>
-        </changelog>
-        <changelog lang="en-gb">
-          <change><![CDATA[[Add] Exposure bias, Exposure program & Metering mode]></change>
-          <change><![CDATA[[Fix] Some language-errors]]></change>
-        </changelog>
-      </entry>
-      <entry>
-        <date>2008-08-14</date>
-        <rev-version>1.0.1</rev-version>
-        <changelog lang="de">
-          <change><![CDATA[[Add] Funktion auch bei der Einstellung: Vorschaubilder]]></change>
-          <change><![CDATA[[Fix] Sicherheitsloch: benutzt htmlspecialchars() um das einbinden von Scripten zu unterbinden]]></change>
-        </changelog>
-        <changelog lang="en-gb">
-          <change><![CDATA[[Add] make it work for Option: display thumbnails]]></change>
-          <change><![CDATA[[Fix] Security: use htmlspecialchars() to avoid scripts]]></change>
-        </changelog>
-      </entry>
-    </history>
     <meta name="generator" content="Phpbb.ModTeam.Tools (c#)" />
   </header>
   <action-group>
-    <copy>
-      <file from="root/language/en/mods/exif_data.php" to="language/en/mods/exif_data.php" />
-    </copy>
     <open src="includes/functions_content.php">
       <edit>
-        <find><![CDATA[	global $extensions, $config, $phpbb_root_path, $phpEx;]]></find>
-        <action type="after-add"><![CDATA[$user->add_lang('mods/exif_data');]]></action>
-      </edit>
-      <edit>
-        <find><![CDATA[					$inline_link = append_sid("{$phpbb_root_path}download/file.$phpEx", 'id=' . $attachment['attach_id']);
-					$download_link .= '&amp;mode=view';]]></find>
-        <action type="after-add"><![CDATA[					$exif = ($attachment['extension'] == 'jpg' || $attachment['extension'] == 'jpeg') ? @exif_read_data($filename, 0, true) : array();
+        <find><![CDATA[					$exif = ($attachment['extension'] == 'jpg' || $attachment['extension'] == 'jpeg') ? @exif_read_data($filename, 0, true) : array();
+					if (!empty($exif["EXIF"]))
+					{
+						$exif_date = $exif_focal = $exif_exposureprogram = $exif_exposure_bias = $exif_metering_mode = 
+						$exif_aperture = $exif_exposure = $exif_iso = $exif_whitebalance = $exif_flash = $exif_make = $exif_model = $user->lang['EXIF_NOT_AVAILABLE'];
+
+						if(isset($exif["EXIF"]["DateTimeOriginal"]))
+						{
+							$timestamp_year = substr($exif["EXIF"]["DateTimeOriginal"], 0, 4);
+							$timestamp_month = substr($exif["EXIF"]["DateTimeOriginal"], 5, 2);
+							$timestamp_day = substr($exif["EXIF"]["DateTimeOriginal"], 8, 2);
+							$timestamp_hour = substr($exif["EXIF"]["DateTimeOriginal"], 11, 2);
+							$timestamp_minute = substr($exif["EXIF"]["DateTimeOriginal"], 14, 2);
+							$timestamp_second = substr($exif["EXIF"]["DateTimeOriginal"], 17, 2);
+							$timestamp = mktime($timestamp_hour, $timestamp_minute, $timestamp_second, $timestamp_month, $timestamp_day, $timestamp_year);
+							$exif_date = $user->format_date($timestamp);
+						}
+						if(isset($exif["EXIF"]["FocalLength"]))
+						{
+							list($num, $den) = explode("/", $exif["EXIF"]["FocalLength"]);
+							$exif_focal  = ($num/$den);
+						}
+						if(isset($exif["EXIF"]["ExposureTime"]))
+						{
+							list($num, $den) = explode("/", $exif["EXIF"]["ExposureTime"]);
+							if ($num > $den) { $exif_exposure = $num/$den; } else { $exif_exposure = ' 1/' . $den/$num ; }
+						}
+						if(isset($exif["EXIF"]["FNumber"]))
+						{
+							list($num,$den) = explode("/",$exif["EXIF"]["FNumber"]);
+							$exif_aperture  = "F/" . ($num/$den);
+						}
+						if(isset($exif["EXIF"]["ISOSpeedRatings"]))
+						{
+							$exif_iso = $exif["EXIF"]["ISOSpeedRatings"];
+						}
+						if (isset($exif["EXIF"]["WhiteBalance"]))
+						{
+							$exif_whitebalance = $user->lang['EXIF_WHITEB_' . (($exif["EXIF"]["WhiteBalance"]) ? 'MANU' : 'AUTO')];
+						}
+						if(isset($exif["EXIF"]["Flash"]))
+						{
+							$exif_flash = $user->lang['EXIF_FLASH_CASE_' . $exif["EXIF"]["Flash"]];
+						}
+						if (isset($exif["IFD0"]["Model"]))
+						{
+							$exif_model = ucwords($exif["IFD0"]["Model"]);
+						}
+						if (isset($exif["EXIF"]["ExposureProgram"]))
+						{
+							$exif_exposureprogram = $user->lang['EXIF_EXPOSURE_PROG_' . $exif["EXIF"]["ExposureProgram"]];
+						}
+						if (isset($exif["EXIF"]["ExposureBiasValue"]))
+						{
+							list($num,$den) = explode("/",$exif["EXIF"]["ExposureBiasValue"]);
+							if (($num/$den) == 0) { $exif_exposure_bias = 0; }
+							$exif_exposure_bias = sprintf($user->lang['EXIF_EXPOSURE_BIAS_EXP'], $exif_exposure_bias);
+						}
+						if (isset($exif["EXIF"]["MeteringMode"]))
+						{
+							$exif_metering_mode = $user->lang['EXIF_METERING_MODE_' . $exif["EXIF"]["MeteringMode"]];
+						}
+
+						$block_array += array(
+							'EXIF_DATE'			=> htmlspecialchars($exif_date),
+							'EXIF_FOCAL'		=> htmlspecialchars($exif_focal),
+							'EXIF_EXPOSURE'		=> htmlspecialchars($exif_exposure),
+							'EXIF_APERTURE'		=> htmlspecialchars($exif_aperture),
+							'EXIF_ISO'			=> htmlspecialchars($exif_iso),
+							'EXIF_FLASH'		=> htmlspecialchars($exif_flash),
+							'EXIF_EXPOSURE_PROG'	=> htmlspecialchars($exif_exposureprogram),
+							'EXIF_EXPOSURE_BIAS'	=> htmlspecialchars($exif_exposure_bias),
+							'EXIF_METERING_MODE'	=> htmlspecialchars($exif_metering_mode),
+
+							'WHITEB'		=> htmlspecialchars($exif_whitebalance),
+							'CAM_MODEL'		=> htmlspecialchars($exif_model),
+							'S_EXIF_DATA'	=> true,
+						);
+					}]]></find>
+        <action type="replace-with"><![CDATA[					$exif = ($attachment['extension'] == 'jpg' || $attachment['extension'] == 'jpeg') ? @exif_read_data($filename, 0, true) : array();
 					$exif_data = array();
 					if (!empty($exif["EXIF"]))
 					{
@@ -173,9 +190,86 @@
 					}]]></action>
       </edit>
       <edit>
-        <find><![CDATA[					$thumbnail_link = append_sid("{$phpbb_root_path}download/file.$phpEx", 'id=' . $attachment['attach_id'] . '&amp;t=1');
-					$download_link .= '&amp;mode=view';]]></find>
-        <action type="after-add"><![CDATA[					$exif = ($attachment['extension'] == 'jpg' || $attachment['extension'] == 'jpeg') ? @exif_read_data($filename, 0, true) : array();
+        <find><![CDATA[					$exif = ($attachment['extension'] == 'jpg' || $attachment['extension'] == 'jpeg') ? @exif_read_data($filename, 0, true) : array();
+					if (!empty($exif["EXIF"]))
+					{
+						$exif_date = $exif_focal = $exif_exposureprogram = $exif_exposure_bias = $exif_metering_mode = 
+						$exif_aperture = $exif_exposure = $exif_iso = $exif_whitebalance = $exif_flash = $exif_make = $exif_model = $user->lang['EXIF_NOT_AVAILABLE'];
+
+						if(isset($exif["EXIF"]["DateTimeOriginal"]))
+						{
+							$timestamp_year = substr($exif["EXIF"]["DateTimeOriginal"], 0, 4);
+							$timestamp_month = substr($exif["EXIF"]["DateTimeOriginal"], 5, 2);
+							$timestamp_day = substr($exif["EXIF"]["DateTimeOriginal"], 8, 2);
+							$timestamp_hour = substr($exif["EXIF"]["DateTimeOriginal"], 11, 2);
+							$timestamp_minute = substr($exif["EXIF"]["DateTimeOriginal"], 14, 2);
+							$timestamp_second = substr($exif["EXIF"]["DateTimeOriginal"], 17, 2);
+							$timestamp = mktime($timestamp_hour, $timestamp_minute, $timestamp_second, $timestamp_month, $timestamp_day, $timestamp_year);
+							$exif_date = $user->format_date($timestamp);
+						}
+						if(isset($exif["EXIF"]["FocalLength"]))
+						{
+							list($num, $den) = explode("/", $exif["EXIF"]["FocalLength"]);
+							$exif_focal  = ($num/$den);
+						}
+						if(isset($exif["EXIF"]["ExposureTime"]))
+						{
+							list($num, $den) = explode("/", $exif["EXIF"]["ExposureTime"]);
+							if ($num > $den) { $exif_exposure = $num/$den; } else { $exif_exposure = ' 1/' . $den/$num ; }
+						}
+						if(isset($exif["EXIF"]["FNumber"]))
+						{
+							list($num,$den) = explode("/",$exif["EXIF"]["FNumber"]);
+							$exif_aperture  = "F/" . ($num/$den);
+						}
+						if(isset($exif["EXIF"]["ISOSpeedRatings"]))
+						{
+							$exif_iso = $exif["EXIF"]["ISOSpeedRatings"];
+						}
+						if (isset($exif["EXIF"]["WhiteBalance"]))
+						{
+							$exif_whitebalance = $user->lang['EXIF_WHITEB_' . (($exif["EXIF"]["WhiteBalance"]) ? 'MANU' : 'AUTO')];
+						}
+						if(isset($exif["EXIF"]["Flash"]))
+						{
+							$exif_flash = $user->lang['EXIF_FLASH_CASE_' . $exif["EXIF"]["Flash"]];
+						}
+						if (isset($exif["IFD0"]["Model"]))
+						{
+							$exif_model = ucwords($exif["IFD0"]["Model"]);
+						}
+						if (isset($exif["EXIF"]["ExposureProgram"]))
+						{
+							$exif_exposureprogram = $user->lang['EXIF_EXPOSURE_PROG_' . $exif["EXIF"]["ExposureProgram"]];
+						}
+						if (isset($exif["EXIF"]["ExposureBiasValue"]))
+						{
+							list($num,$den) = explode("/",$exif["EXIF"]["ExposureBiasValue"]);
+							if (($num/$den) == 0) { $exif_exposure_bias = 0; }
+							$exif_exposure_bias = sprintf($user->lang['EXIF_EXPOSURE_BIAS_EXP'], $exif_exposure_bias);
+						}
+						if (isset($exif["EXIF"]["MeteringMode"]))
+						{
+							$exif_metering_mode = $user->lang['EXIF_METERING_MODE_' . $exif["EXIF"]["MeteringMode"]];
+						}
+
+						$block_array += array(
+							'EXIF_DATE'			=> htmlspecialchars($exif_date),
+							'EXIF_FOCAL'		=> htmlspecialchars($exif_focal),
+							'EXIF_EXPOSURE'		=> htmlspecialchars($exif_exposure),
+							'EXIF_APERTURE'		=> htmlspecialchars($exif_aperture),
+							'EXIF_ISO'			=> htmlspecialchars($exif_iso),
+							'EXIF_FLASH'		=> htmlspecialchars($exif_flash),
+							'EXIF_EXPOSURE_PROG'	=> htmlspecialchars($exif_exposureprogram),
+							'EXIF_EXPOSURE_BIAS'	=> htmlspecialchars($exif_exposure_bias),
+							'EXIF_METERING_MODE'	=> htmlspecialchars($exif_metering_mode),
+
+							'WHITEB'		=> htmlspecialchars($exif_whitebalance),
+							'CAM_MODEL'		=> htmlspecialchars($exif_model),
+							'S_EXIF_DATA'	=> true,
+						);
+					}]]></find>
+        <action type="replace-with"><![CDATA[					$exif = ($attachment['extension'] == 'jpg' || $attachment['extension'] == 'jpeg') ? @exif_read_data($filename, 0, true) : array();
 					$exif_data = array();
 					if (!empty($exif["EXIF"]))
 					{
@@ -254,18 +348,7 @@
     </open>
     <open src="styles/prosilver/template/attachment.html">
       <edit>
-        <find><![CDATA[<!-- IF _file.COMMENT --><dd> {_file.COMMENT}</dd><!-- ENDIF -->]]></find>
-        <action type="after-add"><![CDATA[			<!-- IF _file.S_HAS_EXIF -->
-				<!-- IF _file.COMMENT --><hr /><!-- ENDIF -->
-				<dd><strong>{L_EXIF-DATA}</strong></dd>
-				<!-- BEGIN _exifs -->
-					<dd>{_file._exifs.EXIF_NAME}: <em>{_file._exifs.EXIF_VALUE}</em></dd>
-				<!-- END _exifs -->
-			<!-- ENDIF -->]]></action>
-      </edit>
-      <edit>
-        <find><![CDATA[<dd>{_file.DOWNLOAD_NAME} ({_file.FILESIZE} {_file.SIZE_LANG}) {_file.L_DOWNLOAD_COUNT}</dd>]]></find>
-        <action type="after-add"><![CDATA[			<!-- IF _file.S_EXIF_DATA -->
+        <find><![CDATA[			<!-- IF _file.S_EXIF_DATA -->
 				<hr />
 				<dd><strong>{L_EXIF-DATA}</strong></dd>
 				<dd>{L_EXIF_DATE}: <em>{_file.EXIF_DATE}</em></dd>
@@ -279,6 +362,37 @@
 				<dd>{L_EXIF_FLASH}: <em>{_file.EXIF_FLASH}</em></dd>
 				<dd>{L_EXIF_WHITEB}: <em>{_file.WHITEB}</em></dd>
 				<dd>{L_EXIF_CAM_MODEL}: <em>{_file.CAM_MODEL}</em></dd>
+			<!-- ENDIF -->]]></find>
+        <action type="replace-with"><![CDATA[			<!-- IF _file.S_HAS_EXIF -->
+				<!-- IF _file.COMMENT --><hr /><!-- ENDIF -->
+				<dd><strong>{L_EXIF-DATA}</strong></dd>
+				<!-- BEGIN _exifs -->
+					<dd>{_file._exifs.EXIF_NAME}: <em>{_file._exifs.EXIF_VALUE}</em></dd>
+				<!-- END _exifs -->
+			<!-- ENDIF -->]]></action>
+      </edit>
+      <edit>
+        <find><![CDATA[			<!-- IF _file.S_EXIF_DATA -->
+				<hr />
+				<dd><strong>{L_EXIF-DATA}</strong></dd>
+				<dd>{L_EXIF_DATE}: <em>{_file.EXIF_DATE}</em></dd>
+				<dd>{L_EXIF_FOCAL}: <em>{_file.EXIF_FOCAL} {L_EXIF_FOCAL_EXP}</em></dd>
+				<dd>{L_EXIF_EXPOSURE}: <em>{_file.EXIF_EXPOSURE} {L_EXIF_EXPOSURE_EXP}</em></dd>
+				<dd>{L_EXIF_APERTURE}: <em>{_file.EXIF_APERTURE}</em></dd>
+				<dd>{L_EXIF_EXPOSURE_PROG}: <em>{_file.EXIF_EXPOSURE_PROG}</em></dd>
+				<dd>{L_EXIF_EXPOSURE_BIAS}: <em>{_file.EXIF_EXPOSURE_BIAS}</em></dd>
+				<dd>{L_EXIF_METERING_MODE}: <em>{_file.EXIF_METERING_MODE}</em></dd>
+				<dd>{L_EXIF_ISO}: <em>{_file.EXIF_ISO}</em></dd>
+				<dd>{L_EXIF_FLASH}: <em>{_file.EXIF_FLASH}</em></dd>
+				<dd>{L_EXIF_WHITEB}: <em>{_file.WHITEB}</em></dd>
+				<dd>{L_EXIF_CAM_MODEL}: <em>{_file.CAM_MODEL}</em></dd>
+			<!-- ENDIF -->]]></find>
+        <action type="after-add"><![CDATA[			<!-- IF _file.S_HAS_EXIF -->
+				<hr />
+				<dd><strong>{L_EXIF-DATA}</strong></dd>
+				<!-- BEGIN _exifs -->
+					<dd>{_file._exifs.EXIF_NAME}: <em>{_file._exifs.EXIF_VALUE}</em></dd>
+				<!-- END _exifs -->
 			<!-- ENDIF -->]]></action>
       </edit>
     </open>
