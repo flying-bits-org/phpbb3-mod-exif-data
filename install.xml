@@ -114,7 +114,7 @@
 						if(isset($exif["EXIF"]["FocalLength"]))
 						{
 							list($num, $den) = explode("/", $exif["EXIF"]["FocalLength"]);
-							$exif_data[] = array('EXIF_NAME' => $user->lang['EXIF_FOCUS'], 'EXIF_VALUE' => sprintf($user->lang['EXIF_FOCAL_EXP'], ($num/$den)));
+							$exif_data[] = array('EXIF_NAME' => $user->lang['EXIF_FOCAL'], 'EXIF_VALUE' => sprintf($user->lang['EXIF_FOCAL_EXP'], ($num/$den)));
 						}
 						if(isset($exif["EXIF"]["ExposureTime"]))
 						{
@@ -193,7 +193,7 @@
 						if(isset($exif["EXIF"]["FocalLength"]))
 						{
 							list($num, $den) = explode("/", $exif["EXIF"]["FocalLength"]);
-							$exif_data[] = array('EXIF_NAME' => $user->lang['EXIF_FOCUS'], 'EXIF_VALUE' => sprintf($user->lang['EXIF_FOCAL_EXP'], ($num/$den)));
+							$exif_data[] = array('EXIF_NAME' => $user->lang['EXIF_FOCAL'], 'EXIF_VALUE' => sprintf($user->lang['EXIF_FOCAL_EXP'], ($num/$den)));
 						}
 						if(isset($exif["EXIF"]["ExposureTime"]))
 						{
