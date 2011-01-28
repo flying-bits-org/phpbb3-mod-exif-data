@@ -2,111 +2,125 @@
 <?xml-stylesheet type="text/xsl" href="modx.prosilver.en.xsl"?>
 <!--For security purposes, please check: http://www.phpbb.com/mods/ for the latest version of this MOD. Although MODs are checked before being allowed in the MODs Database there is no guarantee that there are no security problems within the MOD. No support will be given for MODs not found within the MODs Database which can be found at http://www.phpbb.com/mods/-->
 <mod xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.phpbb.com/mods/xml/modx-1.2.1.xsd">
-  <header>
-    <license>http://opensource.org/licenses/gpl-license.php GNU General Public License v2</license>
-    <title lang="de">NV Exif Daten</title>
-    <title lang="en-gb">NV Exif Data</title>
-    <description lang="de"><![CDATA[Zeigt die Exif-Daten der Bilder an, wenn sie als Datei-Anhang hocgeladen wurden.]]></description>
-    <description lang="en-gb"><![CDATA[Shows the Exif-Data on images, which were uploaded as attachments.]]></description>
-    <author-notes lang="de"><![CDATA[Die exif-Erweiterung muss installiert sein, damit die MOD funktioniert.]]></author-notes>
-    <author-notes lang="en-gb"><![CDATA[The exif-Extension must be installed on your server to use this MOD.]]></author-notes>
-    <author-group>
-      <author>
-        <realname>Joas Schilling</realname>
-        <email>nickvergessen@gmx.de</email>
-        <username>nickvergessen</username>
-        <homepage>http://www.flying-bits.org/</homepage>
-        <contributions />
-      </author>
-    </author-group>
-    <mod-version>1.2.1</mod-version>
-    <installation>
-      <level>easy</level>
-      <time>120</time>
-      <target-version>3.0.4</target-version>
-    </installation>
-    <link-group>
-      <link type="contrib" lang="de" href="contrib/update_1_2_0_to_1_2_1/update.xml">Update von 1.2.0 auf 1.2.1</link>
-      <link type="contrib" lang="en-gb" href="contrib/update_1_2_0_to_1_2_1/update.xml">Update from 1.2.0 to 1.2.1</link>
-      <link type="language" lang="de" href="contrib/de.xml">Anleitung für das deutsche Sprachpaket</link>
-      <link type="language" lang="en-gb" href="contrib/de.xml">Manual for German Language-set</link>
-      <link type="template" lang="de" href="contrib/subsilver2.xml">Anleitung für das Style subsilver2</link>
-      <link type="template" lang="en-gb" href="contrib/subsilver2.xml">Manual for subsilver2 Style</link>
-    </link-group>
-    <history>
-      <entry>
-        <date>YYYY-MM-DD</date>
-        <rev-version>1.2.1</rev-version>
-        <changelog lang="de">
-          <change><![CDATA[[Fix] PHP Notice: mktime() expects parameter X to be long, string given (Gallery-Report: #419)]]></change>
-        </changelog>
-        <changelog lang="en-gb">
-          <change><![CDATA[[Fix] PHP Notice: mktime() expects parameter X to be long, string given (Gallery-Report: #419)]]></change>
-        </changelog>
-      </entry>
-      <entry>
-        <date>2008-12-27</date>
-        <rev-version>1.2.0</rev-version>
-        <changelog lang="de">
-          <change><![CDATA[[Fix] Sprachdateien von phpBB Gallery v0.4.1]]></change>
-        </changelog>
-        <changelog lang="en-gb">
-          <change><![CDATA[[Fix] language-file of phpBB Gallery v0.4.1]]></change>
-          <change><![CDATA[[Fix] easier Option to add a exif-value]]></change>
-        </changelog>
-      </entry>
-      <entry>
-        <date>2008-09-17</date>
-        <rev-version>1.0.3</rev-version>
-        <changelog lang="de">
-          <change><![CDATA[[Fix] Belichtungskorrektur (0/3 LW -> 0 LW)]]></change>
-          <change><![CDATA[[Fix] Belichtungszeit (1/0.4 Sek -> 2.5 Sek)]]></change>
-        </changelog>
-        <changelog lang="en-gb">
-          <change><![CDATA[[Fix] Exposure bias (0/3 EV -> 0 EV)]]></change>
-          <change><![CDATA[[Fix] Shutter speed (1/0.4 Sec -> 2.5 Sec)]]></change>
-        </changelog>
-      </entry>
-      <entry>
-        <date>2008-08-21</date>
-        <rev-version>1.0.2</rev-version>
-        <changelog lang="de">
-          <change><![CDATA[[Add] Belichtungskorrektur, Belichtungsprogramm & Belichtungsmessmethode]]></change>
-          <change><![CDATA[[Fix] Ein paar sprachliche Fehler]]></change>
-        </changelog>
-        <changelog lang="en-gb">
-          <change><![CDATA[[Add] Exposure bias, Exposure program & Metering mode]></change>
-          <change><![CDATA[[Fix] Some language-errors]]></change>
-        </changelog>
-      </entry>
-      <entry>
-        <date>2008-08-14</date>
-        <rev-version>1.0.1</rev-version>
-        <changelog lang="de">
-          <change><![CDATA[[Add] Funktion auch bei der Einstellung: Vorschaubilder]]></change>
-          <change><![CDATA[[Fix] Sicherheitsloch: benutzt htmlspecialchars() um das einbinden von Scripten zu unterbinden]]></change>
-        </changelog>
-        <changelog lang="en-gb">
-          <change><![CDATA[[Add] make it work for Option: display thumbnails]]></change>
-          <change><![CDATA[[Fix] Security: use htmlspecialchars() to avoid scripts]]></change>
-        </changelog>
-      </entry>
-    </history>
-    <meta name="generator" content="Phpbb.ModTeam.Tools (c#)" />
-  </header>
-  <action-group>
-    <copy>
-      <file from="root/language/en/mods/exif_data.php" to="language/en/mods/exif_data.php" />
-    </copy>
-    <open src="includes/functions_content.php">
-      <edit>
-        <find><![CDATA[	global $extensions, $config, $phpbb_root_path, $phpEx;]]></find>
-        <action type="after-add"><![CDATA[$user->add_lang('mods/exif_data');]]></action>
-      </edit>
-      <edit>
-        <find><![CDATA[					$inline_link = append_sid("{$phpbb_root_path}download/file.$phpEx", 'id=' . $attachment['attach_id']);
+	<header>
+		<license>http://opensource.org/licenses/gpl-license.php GNU General Public License v2</license>
+
+		<title lang="de">NV Exif Daten</title>
+		<title lang="en-gb">NV Exif Data</title>
+
+		<description lang="de"><![CDATA[Zeigt die Exif-Daten der Bilder an, wenn sie als Datei-Anhang hocgeladen wurden.]]></description>
+		<description lang="en-gb"><![CDATA[Shows the Exif-Data on images, which were uploaded as attachments.]]></description>
+
+		<author-notes lang="de"><![CDATA[Die exif-Erweiterung muss installiert sein, damit die MOD funktioniert.]]></author-notes>
+		<author-notes lang="en-gb"><![CDATA[The exif-Extension must be installed on your server to use this MOD.]]></author-notes>
+
+		<author-group>
+			<author>
+				<realname>Joas Schilling</realname>
+				<email>nickvergessen@gmx.de</email>
+				<username>nickvergessen</username>
+				<homepage>http://www.flying-bits.org/</homepage>
+				<contributions />
+			</author>
+		</author-group>
+
+		<mod-version>1.2.1</mod-version>
+
+		<installation>
+			<level>easy</level>
+			<time>120</time>
+			<target-version>3.0.8</target-version>
+		</installation>
+
+		<link-group>
+			<link type="contrib" lang="de" href="contrib/update_1_2_0_to_1_2_1/update.xml">Update von 1.2.0 auf 1.2.1</link>
+			<link type="contrib" lang="en-gb" href="contrib/update_1_2_0_to_1_2_1/update.xml">Update from 1.2.0 to 1.2.1</link>
+			<link type="language" lang="de" href="contrib/de.xml">Anleitung für das deutsche Sprachpaket</link>
+			<link type="language" lang="en-gb" href="contrib/de.xml">Manual for German Language-set</link>
+			<link type="template" lang="de" href="contrib/subsilver2.xml">Anleitung für das Style subsilver2</link>
+			<link type="template" lang="en-gb" href="contrib/subsilver2.xml">Manual for subsilver2 Style</link>
+		</link-group>
+
+		<history>
+			<entry>
+				<date>YYYY-MM-DD</date>
+				<rev-version>1.2.1</rev-version>
+				<changelog lang="de">
+					<change><![CDATA[[Fix] PHP Notice: mktime() expects parameter X to be long, string given (Gallery-Report: #419)]]></change>
+				</changelog>
+				<changelog lang="en-gb">
+					<change><![CDATA[[Fix] PHP Notice: mktime() expects parameter X to be long, string given (Gallery-Report: #419)]]></change>
+				</changelog>
+			</entry>
+
+			<entry>
+				<date>2008-12-27</date>
+				<rev-version>1.2.0</rev-version>
+				<changelog lang="de">
+					<change><![CDATA[[Fix] Sprachdateien von phpBB Gallery v0.4.1]]></change>
+				</changelog>
+				<changelog lang="en-gb">
+					<change><![CDATA[[Fix] language-file of phpBB Gallery v0.4.1]]></change>
+					<change><![CDATA[[Fix] easier Option to add a exif-value]]></change>
+				</changelog>
+			</entry>
+
+			<entry>
+				<date>2008-09-17</date>
+				<rev-version>1.0.3</rev-version>
+				<changelog lang="de">
+					<change><![CDATA[[Fix] Belichtungskorrektur (0/3 LW -> 0 LW)]]></change>
+					<change><![CDATA[[Fix] Belichtungszeit (1/0.4 Sek -> 2.5 Sek)]]></change>
+				</changelog>
+				<changelog lang="en-gb">
+					<change><![CDATA[[Fix] Exposure bias (0/3 EV -> 0 EV)]]></change>
+					<change><![CDATA[[Fix] Shutter speed (1/0.4 Sec -> 2.5 Sec)]]></change>
+				</changelog>
+			</entry>
+
+			<entry>
+				<date>2008-08-21</date>
+				<rev-version>1.0.2</rev-version>
+				<changelog lang="de">
+					<change><![CDATA[[Add] Belichtungskorrektur, Belichtungsprogramm & Belichtungsmessmethode]]></change>
+					<change><![CDATA[[Fix] Ein paar sprachliche Fehler]]></change>
+				</changelog>
+				<changelog lang="en-gb">
+					<change><![CDATA[[Add] Exposure bias, Exposure program & Metering mode]></change>
+					<change><![CDATA[[Fix] Some language-errors]]></change>
+				</changelog>
+			</entry>
+
+			<entry>
+				<date>2008-08-14</date>
+				<rev-version>1.0.1</rev-version>
+				<changelog lang="de">
+					<change><![CDATA[[Add] Funktion auch bei der Einstellung: Vorschaubilder]]></change>
+					<change><![CDATA[[Fix] Sicherheitsloch: benutzt htmlspecialchars() um das einbinden von Scripten zu unterbinden]]></change>
+				</changelog>
+				<changelog lang="en-gb">
+					<change><![CDATA[[Add] make it work for Option: display thumbnails]]></change>
+					<change><![CDATA[[Fix] Security: use htmlspecialchars() to avoid scripts]]></change>
+				</changelog>
+			</entry>
+		</history>
+	</header>
+
+	<action-group>
+		<copy>
+			<file from="root/language/en/mods/exif_data.php" to="language/en/mods/exif_data.php" />
+		</copy>
+
+		<open src="includes/functions_content.php">
+			<edit>
+				<find><![CDATA[	global $extensions, $config, $phpbb_root_path, $phpEx;]]></find>
+				<action type="after-add"><![CDATA[$user->add_lang('mods/exif_data');]]></action>
+			</edit>
+
+			<edit>
+				<find><![CDATA[					$inline_link = append_sid("{$phpbb_root_path}download/file.$phpEx", 'id=' . $attachment['attach_id']);
 					$download_link .= '&amp;mode=view';]]></find>
-        <action type="after-add"><![CDATA[					$exif = ($attachment['extension'] == 'jpg' || $attachment['extension'] == 'jpeg') ? @exif_read_data($filename, 0, true) : array();
+				<action type="after-add"><![CDATA[					$exif = ($attachment['extension'] == 'jpg' || $attachment['extension'] == 'jpeg') ? @exif_read_data($filename, 0, true) : array();
 					$exif_data = array();
 					if (!empty($exif["EXIF"]))
 					{
@@ -183,11 +197,12 @@
 							'S_HAS_EXIF'		=> (!empty($exif_data)) ? true : false,
 						);
 					}]]></action>
-      </edit>
-      <edit>
-        <find><![CDATA[					$thumbnail_link = append_sid("{$phpbb_root_path}download/file.$phpEx", 'id=' . $attachment['attach_id'] . '&amp;t=1');
+			</edit>
+
+			<edit>
+				<find><![CDATA[					$thumbnail_link = append_sid("{$phpbb_root_path}download/file.$phpEx", 'id=' . $attachment['attach_id'] . '&amp;t=1');
 					$download_link .= '&amp;mode=view';]]></find>
-        <action type="after-add"><![CDATA[					$exif = ($attachment['extension'] == 'jpg' || $attachment['extension'] == 'jpeg') ? @exif_read_data($filename, 0, true) : array();
+				<action type="after-add"><![CDATA[					$exif = ($attachment['extension'] == 'jpg' || $attachment['extension'] == 'jpeg') ? @exif_read_data($filename, 0, true) : array();
 					$exif_data = array();
 					if (!empty($exif["EXIF"]))
 					{
@@ -264,29 +279,31 @@
 							'S_HAS_EXIF'		=> (!empty($exif_data)) ? true : false,
 						);
 					}]]></action>
-      </edit>
-    </open>
-    <open src="styles/prosilver/template/attachment.html">
-      <edit>
-        <find><![CDATA[<!-- IF _file.COMMENT --><dd> {_file.COMMENT}</dd><!-- ENDIF -->]]></find>
-        <action type="after-add"><![CDATA[			<!-- IF _file.S_HAS_EXIF -->
+			</edit>
+		</open>
+
+		<open src="styles/prosilver/template/attachment.html">
+			<edit>
+				<find><![CDATA[<!-- IF _file.COMMENT --><dd> {_file.COMMENT}</dd><!-- ENDIF -->]]></find>
+				<action type="after-add"><![CDATA[			<!-- IF _file.S_HAS_EXIF -->
 				<!-- IF _file.COMMENT --><hr /><!-- ENDIF -->
 				<dd><strong>{L_EXIF-DATA}</strong></dd>
 				<!-- BEGIN _exifs -->
 					<dd>{_file._exifs.EXIF_NAME}: <em>{_file._exifs.EXIF_VALUE}</em></dd>
 				<!-- END _exifs -->
 			<!-- ENDIF -->]]></action>
-      </edit>
-      <edit>
-        <find><![CDATA[<dd>{_file.DOWNLOAD_NAME} ({_file.FILESIZE} {_file.SIZE_LANG}) {_file.L_DOWNLOAD_COUNT}</dd>]]></find>
-        <action type="after-add"><![CDATA[			<!-- IF _file.S_HAS_EXIF -->
+			</edit>
+
+			<edit>
+				<find><![CDATA[<dd>{_file.DOWNLOAD_NAME} ({_file.FILESIZE} {_file.SIZE_LANG}) {_file.L_DOWNLOAD_COUNT}</dd>]]></find>
+				<action type="after-add"><![CDATA[			<!-- IF _file.S_HAS_EXIF -->
 				<!-- IF _file.COMMENT --><hr /><!-- ENDIF -->
 				<dd><strong>{L_EXIF-DATA}</strong></dd>
 				<!-- BEGIN _exifs -->
 					<dd>{_file._exifs.EXIF_NAME}: <em>{_file._exifs.EXIF_VALUE}</em></dd>
 				<!-- END _exifs -->
 			<!-- ENDIF -->]]></action>
-      </edit>
-    </open>
-  </action-group>
+			</edit>
+		</open>
+	</action-group>
 </mod>
